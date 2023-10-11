@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import user.common.CommonUtils;
 import user.model.*;
 import user.repository.UserInfoRepository;
 import user.repository.UserProfileImageRepository;
@@ -35,11 +36,11 @@ import java.util.*;
 @Transactional
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
+    @Autowired CommonUtils commonUtils;
     @Autowired UserRepository userRepository;
     @Autowired UserInfoRepository userInfoRepository;
     @Autowired UserProfileImageRepository userProfileImageRepository;
     @Autowired PasswordEncoder passwordEncoder;
-    @Autowired private final AES128Util aes128Util = new AES128Util();
     private final RedisTemplate<String, Object> redisTemplate;
     @Value("${jwt.secret.key}")
     private String JWT_SECRET_KEY;
@@ -54,19 +55,6 @@ public class UserService implements UserDetailsService {
             () -> new UsernameNotFoundException("Invalid authentication!")
         );
         return new CustomUserDetails(userEntity);
-    }
-
-    public Claims getClaims(HttpServletRequest request){
-        try{
-            Key secretKey = Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-            Claims claim = Jwts.parserBuilder().setSigningKey(secretKey).build()
-                    .parseClaimsJws(request.getHeader("authorization")).getBody();
-            return claim;
-        } catch (ExpiredJwtException e) {
-            throw new ExpiredJwtException(null, null, "로그인 시간이 만료되었습니다.");
-        } catch (Exception e) {
-            throw new BadCredentialsException("인증 정보에 문제가 있어 세션을 종료합니다.");
-        }
     }
 
     public Map<String, Object> signup(SignupRequest signupRequest) throws Exception {
@@ -132,7 +120,7 @@ public class UserService implements UserDetailsService {
         System.out.println("UserService.saveUserInfo.params : " + updateUserInfo.toString());
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
-        Claims claim = getClaims(request);
+        Claims claim = commonUtils.getClaims(request);
         String userCd = claim.get("userCd", String.class);
         UserInfo userInfo = userInfoRepository.findByUserCd(userCd).orElseGet(() -> {
             return UserInfo.builder()
@@ -202,7 +190,7 @@ public class UserService implements UserDetailsService {
     public Map<String, Object> getMyInfo(HttpServletRequest request){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
-        Claims claim = getClaims(request);
+        Claims claim = commonUtils.getClaims(request);
         String userId = claim.getSubject();
         User userEntity = userRepository.getMyInfo(userId).get();
         resultMap.put("user", userEntity);
@@ -216,7 +204,7 @@ public class UserService implements UserDetailsService {
         HashMap<String, Object> paramMap = new HashMap<String, Object>();
         List<User> userArr = new ArrayList<User>();
 
-        Claims claim = getClaims(request);
+        Claims claim = commonUtils.getClaims(request);
         String userCd = claim.get("userCd", String.class);
 
         Page<User> usersPage = userRepository.findUsersWithPageable(queryString, page);
@@ -229,7 +217,7 @@ public class UserService implements UserDetailsService {
     }
 
     public HashMap<String, Object> userGrid(HttpServletRequest request, HashMap<String, Object> mapParam) {
-        Claims claim = getClaims(request);
+        Claims claim = commonUtils.getClaims(request);
         String userCd = claim.get("userCd", String.class);
 
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
