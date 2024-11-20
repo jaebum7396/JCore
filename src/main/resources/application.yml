@@ -19,7 +19,7 @@ spring:
     port: ${REDIS_PORT}
     password: ${REDIS_PASSWORD}
   datasource:
-    url: jdbc:mysql://${AFLK_DB_URI}?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=KST
+    url: jdbc:mysql://${AFLK_DB_URI}?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: ${AFLK_DB_USERNAME}
     password: ${AFLK_DB_PASSWORD}
     initialization-mode: always #import data
