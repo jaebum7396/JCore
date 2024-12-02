@@ -1,9 +1,21 @@
-      __       _______  ___       __   ___
-     /""\     /"     "||"  |     |/"| /  ")
-    /    \   (: ______)||  |     (: |/   /
-   /' /\  \   \/    |  |:  |     |    __/
-  //  __'  \  // ___)   \  |___  (// _  \
- /   /  \\  \(:  (     ( \_|:  \ |: | \  \
-(___/    \___)\__/      \_______)(__|  \__)
-
-AFLK(Always Friends, Loving Kindness) SINCE. 2023
+┌─────────────────[System Online]─────────────────┐
+│ ┌────────────────────────────────────────────┐ │
+│ │                                            │ │
+│ │    [01] Initialize System Kernel...        │ │
+│ │    [02] Loading Innovation Engine...       │ │
+│ │                                            │ │
+│ │     ▓▓▓▓▓▓▓▓▓     <NEXT-GEN>               │ │
+│ │        ▓▓         <INNOVATION>             │ │
+│ │        ▓▓         <DIGITAL>                │ │
+│ │        ▓▓         <FUTURE>                 │ │
+│ │        ▓▓         <SMART>                  │ │
+│ │   ▓▓   ▓▓         <SOLUTIONS>              │ │
+│ │    ▓▓▓▓▓          <POWERED>                │ │
+│ │                                            │ │
+│ │    > J INNOVATIONS                         │ │
+│ │    > VERSION 2024.1.0                      │ │
+│ │    > STATUS: INNOVATION_READY              │ │
+│ │                                            │ │
+│ └────────────────────────────────────────────┘ │
+│    [TRANSFORMING IDEAS INTO REALITY]           │
+└──────────────────[System Ready]────────────────┘
