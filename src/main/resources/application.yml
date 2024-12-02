@@ -10,7 +10,7 @@ eureka:
 
 spring:
   application:
-    name: user
+    name: j-core
   profiles:
     #active: local
     active: deploy
