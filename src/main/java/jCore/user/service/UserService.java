@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import jCore.common.dto.Response;
 import jCore.user.model.dto.CustomUserDetails;
 import jCore.user.model.dto.SignupRequest;
-import jCore.user.model.entity.Auth;
+import jCore.auth.model.entity.Auth;
 import jCore.user.model.entity.User;
 import jCore.user.model.entity.UserInfo;
 import jCore.user.model.entity.UserProfileImage;

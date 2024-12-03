@@ -1,4 +1,4 @@
-package jCore.user.model.dto;
+package jCore.token.dto;
 
 import org.springframework.data.redis.core.RedisHash;
 

@@ -1,4 +1,4 @@
-package jCore.user.model.dto;
+package jCore.token.dto;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

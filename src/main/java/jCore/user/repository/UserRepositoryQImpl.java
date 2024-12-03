@@ -1,13 +1,15 @@
 package jCore.user.repository;
 
-import jCore.user.model.*;
-
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jCore.user.model.entity.*;
+import jCore.auth.model.entity.QAuth;
+import jCore.user.model.entity.QUser;
+import jCore.user.model.entity.QUserInfo;
+import jCore.user.model.entity.QUserProfileImage;
+import jCore.user.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

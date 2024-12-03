@@ -1,4 +1,4 @@
-package jCore.user.model.entity;
+package jCore.auth.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jCore.common.entity.BaseEntity;

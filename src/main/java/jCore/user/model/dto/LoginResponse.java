@@ -1,6 +1,6 @@
 package jCore.user.model.dto;
 
-import jCore.user.model.entity.Auth;
+import jCore.auth.model.entity.Auth;
 import jCore.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

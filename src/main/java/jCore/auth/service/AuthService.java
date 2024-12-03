@@ -1,4 +1,4 @@
-package jCore.user.service;
+package jCore.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -6,8 +6,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jCore.user.model.dto.CustomUserDetails;
 import jCore.user.model.dto.LoginRequest;
-import jCore.user.model.dto.Token;
-import jCore.user.model.entity.Auth;
+import jCore.token.dto.Token;
+import jCore.auth.model.entity.Auth;
 import jCore.user.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import jCore.user.repository.AuthRepository;
-import jCore.user.repository.TokenRepository;
+import jCore.auth.repository.AuthRepository;
+import jCore.token.repository.TokenRepository;
 import jCore.common.AES128Util;
 
 import javax.annotation.PostConstruct;

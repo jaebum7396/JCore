@@ -1,6 +1,7 @@
 package jCore.user.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jCore.auth.model.entity.Auth;
 import jCore.common.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
