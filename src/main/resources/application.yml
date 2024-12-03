@@ -50,6 +50,7 @@ spring:
       enabled: 'true'
 
 logging:
+  config: classpath:logback-spring.xml
   level:
     root: warn
     org:

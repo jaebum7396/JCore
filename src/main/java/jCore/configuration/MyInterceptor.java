@@ -13,7 +13,6 @@ import java.util.Enumeration;
 
 @Slf4j
 public class MyInterceptor implements HandlerInterceptor{
-	private Logger logger = LoggerFactory.getLogger(MyInterceptor.class);
 	private String GATEWAY_URI;
 	private String ACTIVE_PROFILE;
 

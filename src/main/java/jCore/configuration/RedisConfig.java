@@ -13,7 +13,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import jCore.user.service.RedisMessageSubscriber;
+import jCore.api.user.service.RedisMessageSubscriber;
 
 import static jCore.configuration.JacksonConfig.objectMapper;
 
