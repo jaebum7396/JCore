@@ -19,6 +19,15 @@ public class UserInfo extends BaseEntity implements Serializable {
     @Id @Column(name = "USER_CD")
     private String userCd;
 
+    @Column(name = "USER_NM", nullable = true)
+    private String userNm;
+
+    @Column(name = "USER_PHONE_NUMBER", nullable = true)
+    private String userPhoneNo;
+
+    @Column(name = "USER_BIRTH",nullable = true)
+    private String userBirth;
+
     @Column(name = "USER_NICK_NM",nullable = true)
     private String userNickNm;
 
@@ -27,9 +36,6 @@ public class UserInfo extends BaseEntity implements Serializable {
 
     @Column(name = "USER_GENDER",nullable = true)
     private String userGender;
-
-    @Column(name = "LOOKING_FOR_GENDER", nullable = true)
-    private String lookingForGender;
 
     @Column(name = "USER_CHARACTER", nullable = true)
     private String userCharacter;

@@ -17,7 +17,7 @@ import java.util.Set;
 public class LoginResponse {
     public LoginResponse(User userEntity) {
         this.userId = userEntity.getUserId();
-        this.userNm = userEntity.getUserNm();
+        this.userNm = userEntity.getUserInfo().getUserNm();
         this.roles = userEntity.getRoles();
     }
     private String userId;

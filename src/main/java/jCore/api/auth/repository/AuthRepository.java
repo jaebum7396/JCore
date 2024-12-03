@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface AuthRepository extends JpaRepository<User,String> {
     Optional<User> findByUserCd(String userCd);
     Optional<User> findByUserId(String userId);
-    Optional<User> findByUserNm(String userNm);
     List<User> findAll();
 }

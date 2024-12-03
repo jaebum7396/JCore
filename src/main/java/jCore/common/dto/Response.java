@@ -1,18 +1,20 @@
 package jCore.common.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 import java.util.Map;
+
 @Data
 @Builder
 @AllArgsConstructor
+@Schema(description = "API 응답")
 public class Response {
-    @ApiModelProperty(value="성공하였습니다", example="성공")
+    @Schema(description = "응답 메시지", example = "성공하였습니다")
     String message;
-    @ApiModelProperty(value="{model}", example="model")
-    Map<String,Object> result;
+
+    @Schema(description = "응답 결과 데이터", example = "{\"key\": \"value\"}")
+    Map<String, Object> result;
 }

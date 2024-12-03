@@ -33,14 +33,11 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
     @Autowired CommonUtils commonUtils;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    UserInfoRepository userInfoRepository;
-    @Autowired
-    UserProfileImageRepository userProfileImageRepository;
+    @Autowired UserRepository userRepository;
+    @Autowired UserInfoRepository userInfoRepository;
+    @Autowired UserProfileImageRepository userProfileImageRepository;
     @Autowired PasswordEncoder passwordEncoder;
     private final RedisTemplate<String, Object> redisTemplate;
     @Value("${jwt.secret.key}")
@@ -49,13 +46,6 @@ public class UserService implements UserDetailsService {
     public boolean duplicateIdValidate(SignupRequest signupRequest) {
         boolean check = userRepository.findByUserId(signupRequest.getUserId()).isPresent();
         return check;
-    }
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByUserNm(name).orElseThrow(
-            () -> new UsernameNotFoundException("Invalid authentication!")
-        );
-        return new CustomUserDetails(userEntity);
     }
 
     public Map<String, Object> signup(SignupRequest signupRequest) throws Exception {
@@ -66,55 +56,29 @@ public class UserService implements UserDetailsService {
             throw new BadCredentialsException("중복된 아이디입니다.");
         }
         signupRequest.setUserPw(passwordEncoder.encode(signupRequest.getUserPw()));
+        User user = makeUser(signupRequest);
+        user = userRepository.save(user);
+        UserInfo userInfo = makeUserInfo(user);
+        user.setUserInfo(userInfo);
+        resultMap.put("user", user);
+        return resultMap;
+    }
+
+    public User makeUser(SignupRequest signupRequest) throws Exception {
         User userEntity = signupRequest.toEntity();
         userEntity.setDeleteYn("N");
         //ROLE 설정
         Set<Auth> roles = new HashSet<>();
         roles.add(Auth.builder().authType("ROLE_USER").build());
         userEntity.setRoles(roles);
+        return userEntity;
+    }
 
-        userRepository.save(userEntity);
-
+    public UserInfo makeUserInfo(User userEntity) {
         UserInfo userInfo = UserInfo.builder()
-                .userCd(userEntity.getUserCd())
-                .userNickNm(userEntity.getUserNm())
-                .userGender(signupRequest.getUserGender())
-                .lookingForGender((signupRequest.getUserGender().equals("남자") ? "여자" : "남자"))
-                .deleteYn("N")
-                .build();
-
-        String profileImgUrlCommon = "image/profile/common.png";
-        System.out.println("userGender : "+signupRequest.getUserGender());
-        if(signupRequest.getUserGender().equals("남자")){
-            profileImgUrlCommon = "image/profile/man_common.png";
-        }else if(signupRequest.getUserGender().equals("여자")){
-            profileImgUrlCommon = "image/profile/woman_common.png";
-        }
-
-        UserProfileImage userProfileImageCommon =
-            UserProfileImage.builder()
-                .userCd(userEntity.getUserCd())
-                .profileImgUrl(profileImgUrlCommon)
-                .mainYn("Y")
-                .defaultYn("Y")
-                .deleteYn("N")
-                .build();
-
-        userInfo.addUserProfileImage(userProfileImageCommon);
-        userEntity.setUserInfo(userInfo);
-
-        userRepository.save(userEntity);
-
-        //레디스를 통해 friendInfo 또한 저장 해준다
-        System.out.println("redis 전송 userInfo: " + userInfo.toString());
-        redisTemplate.convertAndSend("updateUserInfo", userInfo);
-        resultMap.put("userInfo", userInfo);
-
-        resultMap.put("userId", userEntity.getUserId());
-        resultMap.put("userNm", userEntity.getUserNm());
-        resultMap.put("roles", userEntity.getRoles());
-
-        return resultMap;
+            .userCd(userEntity.getUserCd())
+            .build();
+        return userInfo;
     }
 
     public Map<String, Object> saveUserInfo(HttpServletRequest request, UserInfo updateUserInfo){
@@ -134,9 +98,6 @@ public class UserService implements UserDetailsService {
         }
         if (updateUserInfo.getAboutMe() != null) {
             userInfo.setAboutMe(updateUserInfo.getAboutMe());
-        }
-        if (updateUserInfo.getLookingForGender() != null) {
-            userInfo.setLookingForGender(updateUserInfo.getLookingForGender());
         }
         if (updateUserInfo.getUserCharacter() != null) {
             userInfo.setUserCharacter(updateUserInfo.getUserCharacter());
@@ -200,7 +161,6 @@ public class UserService implements UserDetailsService {
     }
 
     public Map<String, Object> getUsersWithPageable(HttpServletRequest request, String queryString, Pageable page) {
-        Response response;
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         HashMap<String, Object> paramMap = new HashMap<String, Object>();
         List<User> userArr = new ArrayList<User>();

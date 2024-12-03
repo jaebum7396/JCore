@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String>, QuerydslPredicateExecutor<User>, UserRepositoryQ  {
     User save(User userEntity);
     Optional<User> findByUserId(String userId);
-    Optional<User> findByUserNm(String userNm);
     List<User> findAll();
 }

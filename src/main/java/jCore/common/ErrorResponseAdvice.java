@@ -1,4 +1,4 @@
-package jCore.configuration;
+package jCore.common;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class ErrorResponseAdvice {
 	public ResponseEntity handleBadCredentialsException(BadCredentialsException e) {
 		Response responseResult;
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-		e.printStackTrace();
+		//e.printStackTrace();
         responseResult = Response.builder()
                 .message("잘못된 접근입니다.")
                 .result(resultMap).build();

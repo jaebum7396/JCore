@@ -1,85 +1,54 @@
 package jCore.configuration;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.responses.ApiResponses;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseBuilder;
-import springfox.documentation.service.*;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.*;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     private String version = "V0.1";
+
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-            .select()
-            .apis(RequestHandlerSelectors.any())
-            .paths(PathSelectors.any())
-            .build()
-            .securityContexts(Arrays.asList(securityContext())) // 추가
-            .securitySchemes(Arrays.asList(apiKey())) // 추가
-            .consumes(getConsumeContentTypes())
-            .produces(getProduceContentTypes())
-            .apiInfo(apiInfo())
-            .globalResponses(HttpMethod.GET, getGlobalResponses())
-            .globalResponses(HttpMethod.POST, getGlobalResponses())
-            .globalResponses(HttpMethod.PUT, getGlobalResponses())
-            .globalResponses(HttpMethod.DELETE, getGlobalResponses());
-    }
-    private List<Response> getGlobalResponses() {
-        List<Response> globalResponses = new ArrayList<>();
-        globalResponses.add(new ResponseBuilder().code("200").description("OK").build());
-        globalResponses.add(new ResponseBuilder().code("400").description("잘못된 요청").build());
-        globalResponses.add(new ResponseBuilder().code("500").description("서버 에러").build());
-        return globalResponses;
-    }
+    public OpenAPI openAPI() {
+        Info info = new Info()
+                .title("MEMBER API DOCUMENTATION")
+                .version(version)
+                .description("MEMBER API 문서")
+                .contact(new Contact()
+                        .name("주재범")
+                        .email("jaebum7396@naver.com"));
 
-    private Set<String> getConsumeContentTypes(){
-        Set<String> consumes = new HashSet<>();
-        consumes.add("application/json;charset=UTF-8");
-        consumes.add("application/x-www-form-urlencoded");
-        return consumes;
-    }
+        // Security 스키마 설정
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")
+                .in(SecurityScheme.In.HEADER)
+                .name("Authorization");
 
-    private Set<String> getProduceContentTypes(){
-        Set<String> produces = new HashSet<>();
-        produces.add("application/json;charset=UTF-8");
-        return produces;
-    }
+        // Security 요구사항 설정
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-            .title("MEMBER API DOCUMENTATION")
-            .description("MEMBER API 문서")
-            .version(version)
-            .contact(new Contact("주재범", "", "jaebum7396@naver.com"))
-            .build();
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
+        return new OpenAPI()
+                .info(info)
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth", securityScheme))
+                .addSecurityItem(securityRequirement)
+                .components(new Components()
+                        .addResponses("200", new ApiResponse().description("OK")
+                                .content(new Content().addMediaType("application/json", new MediaType())))
+                        .addResponses("400", new ApiResponse().description("잘못된 요청")
+                                .content(new Content().addMediaType("application/json", new MediaType())))
+                        .addResponses("500", new ApiResponse().description("서버 에러")
+                                .content(new Content().addMediaType("application/json", new MediaType()))));
     }
 }

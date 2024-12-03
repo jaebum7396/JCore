@@ -1,4 +1,4 @@
-package jCore.configuration;
+package jCore.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

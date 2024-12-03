@@ -5,10 +5,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jCore.auth.model.entity.QAuth;
-import jCore.user.model.entity.QUser;
-import jCore.user.model.entity.QUserInfo;
-import jCore.user.model.entity.QUserProfileImage;
+import jCore.api.auth.model.entity.QAuth;
+import jCore.api.user.model.entity.QUser;
+import jCore.api.user.model.entity.QUserInfo;
+import jCore.api.user.model.entity.QUserProfileImage;
 import jCore.api.user.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -71,8 +71,8 @@ public class UserRepositoryQImpl implements UserRepositoryQ {
                 .join(user.userInfo, userInfo).fetchJoin()
                 .leftJoin(userInfo.userProfileImages, userProfileImage).fetchJoin()
                 .where(user.userId.eq(queryString)
-                        .or(user.userNm.eq(queryString))
-                        .or(user.userPhoneNo.eq(queryString))
+                        .or(userInfo.userNm.eq(queryString))
+                        .or(userInfo.userPhoneNo.eq(queryString))
                         .or(userInfo.userNickNm.eq(queryString)))
                 .orderBy(user.userCd.asc(), user.userInfo.userNickNm.asc())
                 .offset(pageable.getOffset())

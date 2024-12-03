@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
-
     private final User userEntity;
     public CustomUserDetails(User userEntity) {
         this.userEntity = userEntity;
@@ -21,7 +20,6 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userEntity.getRoles().stream().map(o -> new SimpleGrantedAuthority(o.getAuthType())).collect(Collectors.toList());
     }
-
     @Override
     public String getPassword() {
         return userEntity.getUserPw();

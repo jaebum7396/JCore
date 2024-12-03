@@ -1,6 +1,5 @@
 package jCore.api.user.controller;
 
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jCore.api.auth.service.AuthService;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @Slf4j
-@Api(tags = "UserController")
 @Tag(name = "UserController", description = "회원가입, 유저정보")
 @RestController
 @RequiredArgsConstructor
