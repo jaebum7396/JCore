@@ -13,7 +13,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import jCore.api.user.service.RedisMessageSubscriber;
+import jCore.domain.redis.service.RedisListenerService;
 
 import static jCore.configuration.JacksonConfig.objectMapper;
 
@@ -44,7 +44,7 @@ public class RedisConfig {
 
     @Bean
     public MessageListenerAdapter messageListenerAdapter() {
-        return new MessageListenerAdapter(new RedisMessageSubscriber(objectMapper(), redisTemplate(redisConnectionFactory())));
+        return new MessageListenerAdapter(new RedisListenerService(objectMapper(), redisTemplate(redisConnectionFactory())));
     }
 
     @Bean
