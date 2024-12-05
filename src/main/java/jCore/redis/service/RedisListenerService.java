@@ -1,6 +1,8 @@
-package jCore.domain.redis.service;
+package jCore.redis.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import jCore.redis.model.dto.Envelope;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -17,12 +19,15 @@ public class RedisListenerService implements MessageListener {
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        System.out.println("FriendInfoSynchronizeService.onMessage()" + message);
+        String messageString = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
         try {
-            // redis에서 발행된 데이터를 받아 deserialize
-            //String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
-            //FriendInfo friendInfo = objectMapper.readValue(publishMessage, FriendInfo.class);
-            //chatService.updateFriendInfo(friendInfo);
+            if (messageString == null) {
+                log.error("this message is null");
+                return;
+            }
+            Envelope envelope = objectMapper.readValue(messageString, Envelope.class);
+            String topic = envelope.getTopic();
+            ObjectNode payload = envelope.getPayload();
         } catch (Exception e) {
             log.error(e.getMessage());
         }

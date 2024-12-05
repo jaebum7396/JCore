@@ -1,4 +1,4 @@
-package jCore.configuration;
+package jCore.config;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

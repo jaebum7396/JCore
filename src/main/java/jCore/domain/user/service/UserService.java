@@ -97,9 +97,9 @@ public class UserService {
         if (updateUserInfo.getUserCharacter() != null) {
             userInfo.setUserCharacter(updateUserInfo.getUserCharacter());
         }
-        if (updateUserInfo.getFcmToken() != null) {
+        /*if (updateUserInfo.getFcmToken() != null) {
             userInfo.setFcmToken(updateUserInfo.getFcmToken());
-        }
+        }*/
         if (updateUserInfo.getUserProfileImages().size() != 0) {
             if("Y".equals(updateUserInfo.getUserProfileImages().get(0).getDeleteYn())){
                 System.out.println("프로필 이미지 삭제 프로세스");

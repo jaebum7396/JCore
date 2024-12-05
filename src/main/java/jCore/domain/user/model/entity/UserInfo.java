@@ -40,9 +40,6 @@ public class UserInfo extends BaseEntity implements Serializable {
     @Column(name = "USER_CHARACTER", nullable = true)
     private String userCharacter;
 
-    @Column(name = "FCM_TOKEN", length = 3000, nullable = true)
-    private String fcmToken;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
     @JoinColumn(name = "USER_CD")
     private List<UserProfileImage> userProfileImages = new ArrayList<>();

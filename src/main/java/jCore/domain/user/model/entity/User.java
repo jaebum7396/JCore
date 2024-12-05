@@ -33,11 +33,6 @@ public class User extends BaseEntity implements Serializable {
     @Schema(description = "사용자 코드", example = "550e8400-e29b-41d4-a716-446655440000")
     private String userCd;
 
-    @Column(name = "DOMAIN_CD")
-    @ColumnDefault("1")
-    @Schema(description = "도메인 코드", example = "JCORE")
-    private String domainCd;
-
     @Column(name = "USER_ID", nullable = false)
     @Schema(description = "사용자 아이디", example = "testplus")
     private String userId;
@@ -55,18 +50,6 @@ public class User extends BaseEntity implements Serializable {
     @ColumnDefault("1")
     @Schema(description = "사용자 상태", example = "1")
     private String userStatus;
-
-    @Column(name = "USER_NM")
-    @Schema(description = "사용자 이름", example = "테스트플러스")
-    private String userNm;
-
-    @Column(name = "USER_PHONE_NO")
-    @Schema(description = "사용자 전화번호", example = "010-0000-0366")
-    private String userPhoneNo;
-
-    @Column(name = "USER_BIRTH")
-    @Schema(description = "사용자 생년월일", example = "1990-01-01")
-    private String userBirth;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_CD")

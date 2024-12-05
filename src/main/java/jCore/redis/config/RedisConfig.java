@@ -1,4 +1,4 @@
-package jCore.configuration;
+package jCore.redis.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +13,9 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import jCore.domain.redis.service.RedisListenerService;
+import jCore.redis.service.RedisListenerService;
 
-import static jCore.configuration.JacksonConfig.objectMapper;
+import static jCore.config.JacksonConfig.objectMapper;
 
 @Configuration
 public class RedisConfig {
@@ -45,11 +45,6 @@ public class RedisConfig {
     @Bean
     public MessageListenerAdapter messageListenerAdapter() {
         return new MessageListenerAdapter(new RedisListenerService(objectMapper(), redisTemplate(redisConnectionFactory())));
-    }
-
-    @Bean
-    public ChannelTopic channelTopic() {
-        return new ChannelTopic("updateUserInfo"); // 구독할 채널명 설정
     }
 
     // 어플리케이션에서 사용할 redisTemplate 설정

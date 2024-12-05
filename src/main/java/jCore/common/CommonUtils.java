@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
-import jCore.configuration.JacksonConfig;
+import jCore.config.JacksonConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;

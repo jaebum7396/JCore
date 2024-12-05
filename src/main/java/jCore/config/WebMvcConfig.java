@@ -1,4 +1,4 @@
-package jCore.configuration;
+package jCore.config;
 
 import jCore.common.MyInterceptor;
 import org.springframework.beans.factory.annotation.Value;

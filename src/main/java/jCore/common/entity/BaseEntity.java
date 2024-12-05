@@ -8,6 +8,8 @@ import javax.persistence.MappedSuperclass;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -32,6 +34,11 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties({"insertDt", "insertUserCd", "updateDt", "updateUserCd",
         "deleteYn", "deleteDt", "deleteUserCd", "deleteRemark"})
 public abstract class BaseEntity {
+    @Column(name = "DOMAIN_CD")
+    @ColumnDefault("'JCORE'")
+    @Schema(description = "도메인 코드", example = "JCORE")
+    private String domainCd;
+
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @Column(nullable = false, updatable = false, name = "INSERT_DT")
