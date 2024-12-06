@@ -35,7 +35,7 @@ public class BoardPost extends BaseEntity implements Serializable {
 
     @Column(name = "BOARD_POST_TYPE")
     @Schema(description = "게시물 타입", example = "NOTICE")
-    private String boardType;
+    private String boardPostType;
 
     @Column(name = "BOARD_POST_TITLE", nullable = false)
     @Schema(description = "게시물 제목", example = "")

@@ -1,4 +1,4 @@
-package jCore.domain.board.model.dto;
+package jCore.domain.board.model.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jCore.domain.board.model.entity.Board;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Schema(description = "게시판 생성 요청")
 public class SaveBoardRequest {
-    @Schema(description = "게시판 코드", example = "JCORE", required = false)
+    @Schema(description = "게시판 코드", example = "", required = false)
     private String boardCd;
 
     @Schema(description = "도메인 코드", example = "JCORE", required = true)
@@ -25,11 +25,16 @@ public class SaveBoardRequest {
     @Schema(description = "게시판 타입", example = "NOTICE", required = true)
     private String boardType;
 
+    @Schema(description = "게시판 삭제", example = "N", required = false)
+    private String deleteYn;
+
     public Board toEntity() {
         return Board.builder()
+                .boardCd(boardCd)
                 .domainCd(domainCd)
                 .boardNm(boardNm)
                 .boardType(boardType)
+                .deleteYn(deleteYn != null && deleteYn.equals("Y") ? "Y" : "N")
                 .build();
     }
 }

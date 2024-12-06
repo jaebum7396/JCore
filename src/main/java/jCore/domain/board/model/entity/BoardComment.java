@@ -29,13 +29,17 @@ public class BoardComment extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "BOARD_COMMENTS_CD")
+    @Column(name = "BOARD_COMMENT_CD")
     @Schema(description = "댓글 코드", example = "550e8400-e29b-41d4-a716-446655440000")
-    private String boardCommentsCd;
+    private String boardCommentCd;
 
     @Column(name = "BOARD_COMMENT_CONTENTS", nullable = false)
     @Schema(description = "댓글 내용", example = "")
     private String boardCommentContents;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PARENT_BOARD_COMMENT_CD")
+    private BoardComment parentBoardComment;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BOARD_POST_CD")
