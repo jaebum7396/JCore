@@ -8,7 +8,7 @@ import jCore.domain.auth.model.entity.Auth;
 import jCore.domain.auth.repository.AuthRepository;
 import jCore.domain.token.dto.Token;
 import jCore.domain.token.repository.TokenRepository;
-import jCore.domain.user.model.dto.LoginRequest;
+import jCore.domain.user.model.dto.request.LoginRequest;
 import jCore.domain.user.model.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;

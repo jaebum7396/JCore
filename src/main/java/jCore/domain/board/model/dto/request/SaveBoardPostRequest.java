@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Schema(description = "게시물 등록 요청")
 public class SaveBoardPostRequest {
-    @Schema(description = "게시물 코드", example = "", required = true)
+    @Schema(description = "게시물 코드", example = "", required = false)
     private String boardPostCd;
 
     @Schema(description = "도메인 코드", example = "JCORE", required = true)

@@ -46,6 +46,6 @@ public class BoardComment extends BaseEntity implements Serializable {
     private BoardPost boardPost;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_CD")
+    @JoinColumn(name = "USER_INFO_CD")
     private UserInfo writeUserInfo;
 }

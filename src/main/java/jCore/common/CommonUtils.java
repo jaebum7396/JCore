@@ -36,7 +36,7 @@ public class CommonUtils {
     /**
      * <h3>성공 응답을 포장하는 ResponseEntity를 생성합니다.</h3>
      */
-    public ResponseEntity<Response> okResponsePackaging(Map<String, Object> result) {
+    public static ResponseEntity<Response> okResponsePackaging(Map<String, Object> result) {
         Response response = Response.builder()
                 .message("요청 성공")
                 .result(result).build();

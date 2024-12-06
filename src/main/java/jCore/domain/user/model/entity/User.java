@@ -1,5 +1,6 @@
 package jCore.domain.user.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jCore.domain.auth.model.entity.Auth;
@@ -52,7 +53,7 @@ public class User extends BaseEntity implements Serializable {
     private String userStatus;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_CD")
+    @JoinColumn(name = "USER_INFO_CD")
     @Schema(description = "사용자 상세 정보")
     private UserInfo userInfo;
 

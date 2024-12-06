@@ -1,8 +1,11 @@
 package jCore.domain.user.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jCore.common.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,8 +19,12 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 @Entity(name = "USER_INFO")
 public class UserInfo extends BaseEntity implements Serializable {
-    @Id @Column(name = "USER_CD")
-    private String userCd;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "USER_INFO_CD")
+    @Schema(description = "사용자 정보 코드", example = "550e8400-e29b-41d4-a716-446655440000")
+    private String userInfoCd;
 
     @Column(name = "USER_NM", nullable = true)
     private String userNm;
@@ -40,16 +47,13 @@ public class UserInfo extends BaseEntity implements Serializable {
     @Column(name = "USER_CHARACTER", nullable = true)
     private String userCharacter;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_CD")
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
+    @JoinColumn(name = "USER_PROFILE_IMAGE_CD")
+    @JsonIgnore
     private List<UserProfileImage> userProfileImages = new ArrayList<>();
-
-    public void addUserProfileImage(UserProfileImage userProfileImage) {
-        this.userProfileImages.add(userProfileImage);
-    }
-
-    public void setUserProfileImages(List<UserProfileImage> userProfileImages) {
-        this.userProfileImages = userProfileImages;
-    }
 }
 

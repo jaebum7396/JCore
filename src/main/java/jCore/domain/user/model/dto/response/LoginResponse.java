@@ -1,4 +1,4 @@
-package jCore.domain.user.model.dto;
+package jCore.domain.user.model.dto.response;
 
 import jCore.domain.auth.model.entity.Auth;
 import jCore.domain.user.model.entity.User;

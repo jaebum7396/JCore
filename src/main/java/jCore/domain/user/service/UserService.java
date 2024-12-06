@@ -1,6 +1,7 @@
 package jCore.domain.user.service;
 
 import io.jsonwebtoken.Claims;
+import jCore.domain.user.model.dto.request.SaveUserRequest;
 import jCore.domain.user.repository.UserInfoRepository;
 import jCore.domain.user.repository.UserProfileImageRepository;
 import jCore.domain.user.repository.UserRepository;
@@ -10,6 +11,7 @@ import jCore.domain.user.model.entity.User;
 import jCore.domain.user.model.entity.UserInfo;
 import jCore.domain.user.model.entity.UserProfileImage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ import jCore.common.CommonUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -38,109 +41,41 @@ public class UserService {
     @Value("${jwt.secret.key}")
     private String JWT_SECRET_KEY;
 
-    public boolean duplicateIdValidate(SignupRequest signupRequest) {
-        boolean check = userRepository.findByUserId(signupRequest.getUserId()).isPresent();
-        return check;
-    }
-
-    public Map<String, Object> signup(SignupRequest signupRequest) throws Exception {
-        System.out.println("UserService.signup.params : " + signupRequest.toString());
+    public Map<String, Object> saveUser(SaveUserRequest saveUserRequest) throws Exception {
+        log.info("UserService.saveUser.params : " + saveUserRequest.toString());
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        //중복 아이디 검사
-        if (duplicateIdValidate(signupRequest)) {
+
+        // 1. 중복 아이디 검사
+        if(userRepository.findByUserId(saveUserRequest.getUserId()).isPresent()){
             throw new BadCredentialsException("중복된 아이디입니다.");
-        }
-        signupRequest.setUserPw(passwordEncoder.encode(signupRequest.getUserPw()));
-        User user = makeUser(signupRequest);
+        };
+
+        // 2. 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(saveUserRequest.getUserPw());
+
+        // 3. User 생성
+        User user = saveUserRequest.toEntity();
+        user.setUserPw(encodedPassword);
         user = userRepository.save(user);
-        UserInfo userInfo = makeUserInfo(user);
-        user.setUserInfo(userInfo);
-        resultMap.put("user", user);
-        return resultMap;
-    }
 
-    public User makeUser(SignupRequest signupRequest) throws Exception {
-        User userEntity = signupRequest.toEntity();
-        userEntity.setDeleteYn("N");
-        //ROLE 설정
-        Set<Auth> roles = new HashSet<>();
-        roles.add(Auth.builder().authType("ROLE_USER").build());
-        userEntity.setRoles(roles);
-        return userEntity;
-    }
+        String userCd = user.getUserCd();
 
-    public UserInfo makeUserInfo(User userEntity) {
-        UserInfo userInfo = UserInfo.builder()
-            .userCd(userEntity.getUserCd())
-            .build();
-        return userInfo;
-    }
-
-    public Map<String, Object> saveUserInfo(HttpServletRequest request, UserInfo updateUserInfo){
-        System.out.println("UserService.saveUserInfo.params : " + updateUserInfo.toString());
-        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-
-        Claims claim = commonUtils.getClaims(request);
-        String userCd = claim.get("userCd", String.class);
-        UserInfo userInfo = userInfoRepository.findByUserCd(userCd).orElseGet(() -> {
-            return UserInfo.builder()
-                .userCd(userCd)
-                .build();
+        // 4. UserInfo 생성
+        Optional<UserInfo> userInfoOpt = Optional.ofNullable(user.getUserInfo());
+        log.info("Existing UserInfo: {}", user.getUserInfo());  // 기존 UserInfo 존재 여부 확인
+        UserInfo userInfo = userInfoOpt.orElseGet(() -> {
+            log.info("Creating new UserInfo");  // 새로운 UserInfo 생성 시점 확인
+            return UserInfo.builder().build();
         });
-        // 업데이트할 필드가 있다면 업데이트합니다.
-        if (updateUserInfo.getUserNickNm() != null) {
-            userInfo.setUserNickNm(updateUserInfo.getUserNickNm());
-        }
-        if (updateUserInfo.getAboutMe() != null) {
-            userInfo.setAboutMe(updateUserInfo.getAboutMe());
-        }
-        if (updateUserInfo.getUserCharacter() != null) {
-            userInfo.setUserCharacter(updateUserInfo.getUserCharacter());
-        }
-        /*if (updateUserInfo.getFcmToken() != null) {
-            userInfo.setFcmToken(updateUserInfo.getFcmToken());
-        }*/
-        if (updateUserInfo.getUserProfileImages().size() != 0) {
-            if("Y".equals(updateUserInfo.getUserProfileImages().get(0).getDeleteYn())){
-                System.out.println("프로필 이미지 삭제 프로세스");
-                for(UserProfileImage upi : updateUserInfo.getUserProfileImages()){
-                    System.out.println("삭제할 이미지 객체 : "+upi.toString());
-                    //upi.setUserInfo(userInfo);
-                    //userProfileImageRepository.save(upi);
-                    for(UserProfileImage upi2 : userInfo.getUserProfileImages()){
-                        System.out.println("삭제할 이미지 객체 : "+upi.getUserProfileImageCd()+" / "+upi2.getUserProfileImageCd());
-                        if(upi2.getUserProfileImageCd().equals(upi.getUserProfileImageCd())){
-                            upi2.setDeleteYn("Y");
-                            upi2.setDefaultYn("N");
-                            upi2.setMainYn("N");
-                        }
-                    }
-                }
-            }else{
-                for(UserProfileImage upi: userInfo.getUserProfileImages()){
-                    upi.setMainYn("N");
-                }
-                for(UserProfileImage upi : updateUserInfo.getUserProfileImages()){
-                    //upi.setUserInfo(userInfo);
-                    //userProfileImageRepository.save(upi);
-                    upi.setUserCd(userCd);
-                    upi.setDeleteYn("N");
-                    upi.setDefaultYn("N");
-                    upi.setMainYn("Y");
-                    userInfo.addUserProfileImage(upi);
-                }
-            }
-        }
-        userInfo = userInfoRepository.save(userInfo);
+        userInfo.setUserNm(saveUserRequest.getUserNm());
+        userInfo.setUserPhoneNo(saveUserRequest.getUserPhoneNo());
+        userInfo.setUserGender(saveUserRequest.getUserGender());
+        userInfo.setUser(user);
+        userInfoRepository.save(userInfo);
+        user.setUserInfo(userInfo);
+        userRepository.save(user);
 
-        Pageable page = Pageable.ofSize(10);
-        //Page<User> usersPage = userRepository.findUsersWithPageable(userInfo.getUserCd(), page);
-        //System.out.println("usersPage = " + usersPage.getContent().toString());
-
-        System.out.println("redis 전송 userInfo: " + userInfo.toString());
-        redisTemplate.convertAndSend("updateUserInfo", userInfo);
-        resultMap.put("userInfo", userInfo);
-
+        resultMap.put("userCd", userCd);
         return resultMap;
     }
 

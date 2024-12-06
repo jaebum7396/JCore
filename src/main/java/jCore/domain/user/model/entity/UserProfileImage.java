@@ -1,13 +1,12 @@
 package jCore.domain.user.model.entity;
 
 import jCore.common.entity.BaseEntity;
+import jCore.domain.board.model.entity.BoardPost;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -23,9 +22,6 @@ public class UserProfileImage extends BaseEntity implements Serializable {
     @Column( name = "USER_PROFILE_IMAGE_CD")
     private String userProfileImageCd;
 
-    @Column(name = "USER_CD")
-    private String userCd;
-
     @Column(name = "PROFILE_IMG_URL", nullable = true)
     private String profileImgUrl;
 
@@ -34,4 +30,8 @@ public class UserProfileImage extends BaseEntity implements Serializable {
 
     @Column(name = "DEFAULT_YN", nullable = true)
     private String defaultYn;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_INFO_CD")
+    private UserInfo userInfo;
 }
