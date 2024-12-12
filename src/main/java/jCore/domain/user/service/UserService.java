@@ -45,11 +45,6 @@ public class UserService {
         log.info("UserService.saveUser.params : " + saveUserRequest.toString());
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
-        // 1. 중복 아이디 검사
-        if(userRepository.findByUserId(saveUserRequest.getUserId()).isPresent()){
-            throw new BadCredentialsException("중복된 아이디입니다.");
-        };
-
         // 2. 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(saveUserRequest.getUserPw());
 
@@ -61,8 +56,10 @@ public class UserService {
         String userCd = user.getUserCd();
 
         // 4. UserInfo 생성
-        Optional<UserInfo> userInfoOpt = Optional.ofNullable(user.getUserInfo());
-        log.info("Existing UserInfo: {}", user.getUserInfo());  // 기존 UserInfo 존재 여부 확인
+        Optional<UserInfo> userInfoOpt = userInfoRepository.findByUser(user);
+        userInfoOpt.ifPresent(userInfo -> {
+            log.info("Updating UserInfo" + userInfo);  // UserInfo 업데이트 시점 확인
+        });
         UserInfo userInfo = userInfoOpt.orElseGet(() -> {
             log.info("Creating new UserInfo");  // 새로운 UserInfo 생성 시점 확인
             return UserInfo.builder().build();
@@ -71,9 +68,10 @@ public class UserService {
         userInfo.setUserPhoneNo(saveUserRequest.getUserPhoneNo());
         userInfo.setUserGender(saveUserRequest.getUserGender());
         userInfo.setUser(user);
-        userInfoRepository.save(userInfo);
+        userInfo = userInfoRepository.save(userInfo);
+
         user.setUserInfo(userInfo);
-        userRepository.save(user);
+        user = userRepository.save(user);
 
         resultMap.put("userCd", userCd);
         return resultMap;

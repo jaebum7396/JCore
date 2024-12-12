@@ -35,7 +35,7 @@ public class ErrorResponseAdvice {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		//e.printStackTrace();
         responseResult = Response.builder()
-                .message("잘못된 접근입니다.")
+                .message(e.getMessage())
                 .result(resultMap).build();
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseResult);
 	}

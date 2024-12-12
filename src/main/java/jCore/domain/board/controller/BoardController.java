@@ -20,7 +20,7 @@ import static jCore.common.CommonUtils.okResponsePackaging;
 @Slf4j
 @Tag(name = "BoardController", description = "게시판 API")
 @RestController
-@RequestMapping("/board")
+//@RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;

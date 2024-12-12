@@ -52,12 +52,12 @@ public class User extends BaseEntity implements Serializable {
     @Schema(description = "사용자 상태", example = "1")
     private String userStatus;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_INFO_CD")
     @Schema(description = "사용자 상세 정보")
     private UserInfo userInfo;
 
-    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     @Builder.Default
     @Schema(description = "사용자 권한 목록")
     private Set<Auth> roles = new HashSet<>();
