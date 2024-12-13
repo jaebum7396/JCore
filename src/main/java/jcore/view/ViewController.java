@@ -7,39 +7,39 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ViewController {
-    @GetMapping("/admin/charts")
+    @GetMapping("/sample/charts")
     public String charts() {
-        return "admin/charts";
+        return "sample/charts";
     }
-    @RequestMapping("/admin/index")
-    public ModelAndView adminIndex() throws Exception {
+    @RequestMapping("/sample/index")
+    public ModelAndView sampleIndex() throws Exception {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("admin/index");
+        mv.setViewName("sample/index");
         return mv;
     }
-    @GetMapping("/admin/layout-sidenav-light")
+    @GetMapping("/sample/layout-sidenav-light")
     public String layoutSidenavLight() {
-        return "admin/layout-sidenav-light";
+        return "sample/layout-sidenav-light";
     }
-    @GetMapping("/admin/layout-static")
+    @GetMapping("/sample/layout-static")
     public String layoutstatic() {
-        return "admin/layout-static";
+        return "sample/layout-static";
     }
-    @GetMapping("/admin/login")
-    public String adminUser() {
-        return "admin/login";
+    @GetMapping("/sample/login")
+    public String sampleUser() {
+        return "sample/login";
     }
-    @GetMapping("/admin/password")
+    @GetMapping("/sample/password")
     public String password() {
-        return "admin/password";
+        return "sample/password";
     }
-    @GetMapping("/admin/register")
+    @GetMapping("/sample/register")
     public String register() {
-        return "admin/register";
+        return "sample/register";
     }
-    @GetMapping("/admin/tables")
+    @GetMapping("/sample/tables")
     public String tables() {
-        return "admin/tables";
+        return "sample/tables";
     }
     @GetMapping("/policy/privacy_policy")
     public String privacyPolicy() {
