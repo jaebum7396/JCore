@@ -16,11 +16,20 @@ public class SaveMenuRequest {
     @Schema(description = "MENU 코드", example = "", required = false)
     private String menuCd;
 
+    @Schema(description = "부모 MENU 코드", example = "", required = false)
+    private String parentMenuCd;
+
     @Schema(description = "MENU 이름", example = "testplus", required = true)
     private String menuNm;
 
     @Schema(description = "MENU 타입", example = "NOTICE", required = true)
     private String menuType;
+
+    @Schema(description = "MENU URL", example = "NOTICE", required = true)
+    private String menuUrl;
+
+    @Schema(description = "VIEW 여부", example = "Y", required = true)
+    private String viewYn;
 
     @Schema(description = "MENU 삭제", example = "N", required = false)
     private String deleteYn;
