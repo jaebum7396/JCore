@@ -40,9 +40,15 @@ spring:
       #ddl-auto=none:
     #show-sql: 'true'
     defer-datasource-initialization: 'true' #import data
+  web:
+    resources:
+      static-locations: classpath:/static/
   mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  jsp:
+    cache: 'false'
   devtools:
     restart:
       enabled: 'true'

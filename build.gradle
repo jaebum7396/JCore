@@ -82,6 +82,16 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+	//view
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.webjars.bower:axios:0.21.1'
+	implementation group: 'org.webjars', name: 'bootstrap', version: '3.3.7'
+	implementation group: 'org.webjars', name: 'jquery'
+
+	//jsp
+	implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+	implementation 'javax.servlet:jstl:1.2'
+
 	//sercurity
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
