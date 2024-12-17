@@ -45,4 +45,8 @@ public class ViewController {
     public String privacyPolicy() {
         return "policy/privacy_policy";
     }
+    @GetMapping("/admin/index")
+    public String adminIndex() {
+        return "admin/index";
+    }
 }

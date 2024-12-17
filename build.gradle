@@ -82,6 +82,11 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+	//websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	implementation 'org.webjars:sockjs-client:1.5.1'
+
 	//view
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.webjars.bower:axios:0.21.1'

@@ -25,6 +25,9 @@ public class SaveMenuRequest {
     @Schema(description = "MENU 타입", example = "NOTICE", required = true)
     private String menuType;
 
+    @Schema(description = "MENU 레벨", example = "0", required = true)
+    private int menuLevel;
+
     @Schema(description = "MENU URL", example = "NOTICE", required = true)
     private String menuUrl;
 
@@ -39,6 +42,9 @@ public class SaveMenuRequest {
                 .menuCd(menuCd)
                 .menuNm(menuNm)
                 .menuType(menuType)
+                .menuLevel(menuLevel)
+                .menuUrl(menuUrl)
+                .viewYn(viewYn)
                 .deleteYn(deleteYn != null && deleteYn.equals("Y") ? "Y" : "N")
                 .build();
     }

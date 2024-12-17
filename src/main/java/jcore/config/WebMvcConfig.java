@@ -3,10 +3,7 @@ package jcore.config;
 import jcore.common.MyInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -14,26 +11,34 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	String GATEWAY_URI;
 	@Value("${spring.profiles.active}")
 	String ACTIVE_PROFILE;
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/**")
+		registry.addResourceHandler("/static/**")  // /** 만 사용
 				.addResourceLocations("classpath:/static/");
 	}
+
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+		configurer.setUseTrailingSlashMatch(true);
+	}
+
+	// 나머지 코드는 그대로 유지
 	@Override
 	public void addInterceptors(InterceptorRegistry reg) {
 		reg.addInterceptor(new MyInterceptor(GATEWAY_URI, ACTIVE_PROFILE))
-			.addPathPatterns("/*")
-			.excludePathPatterns("/css/**", "/images/**", "/js/**");
+				.addPathPatterns("/*")
+				.excludePathPatterns("/css/**", "/images/**", "/js/**");
 	}
+
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		if(ACTIVE_PROFILE.equals("local")) {
-			registry.addMapping("/**") // 모든 경로에 대해 CORS 설정 적용
-				.allowedOrigins(GATEWAY_URI) // 허용할 도메인을 allowedOrigins에 지정
-				.allowedOrigins("http://localhost:3000") // 허용할 도메인을 allowedOrigins에 지정
-				.allowedMethods("*") // 허용할 HTTP 메서드 설정
-				.allowedHeaders("*") // 허용할 헤더 설정
-				;
+			registry.addMapping("/**")
+					.allowedOrigins(GATEWAY_URI)
+					.allowedOrigins("http://localhost:3000")
+					.allowedMethods("*")
+					.allowedHeaders("*");
 		}
 	}
 }

@@ -44,6 +44,9 @@ spring:
     resources:
       static-locations: classpath:/static/
   mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+      use-trailing-slash-match: true
     view:
       prefix: /WEB-INF/view/
       suffix: .jsp

@@ -20,14 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()  // CSRF 보호 비활성화 (테스트용)
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").permitAll()  // admin/** 경로 모두 허용
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll();
-
-        // 디버깅을 위해 모든 요청 로깅
+                .anyRequest().permitAll()  // 모든 요청 허용
+                ;
+        // 디버깅 필터는 유지
         http.addFilterBefore(new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
