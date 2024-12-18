@@ -23,7 +23,7 @@ public class MenuService {
     public Map<String, Object> getMenu() throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
-        List<Menu> menuList = menuRepository.findAll();
+        List<Menu> menuList = menuRepository.findByMenuLevel(0);
 
         resultMap.put("menuList", menuList);
 
