@@ -14,6 +14,8 @@ class BaseMenuGenerator {
 				if (response.status === 200) {
 					const menuHtml = this.generateMenu(response.data.result.menuList);
 					this.renderMenu(menuHtml);
+					// 메뉴 렌더링 후 사이드바 토글 이벤트 초기화
+					this.postRender();  // 렌더링 후 처리를 위한 훅
 				}
 			})
 			.catch(error => {
@@ -21,11 +23,32 @@ class BaseMenuGenerator {
 			});
 	}
 
+	initSidebarToggle() {
+		const sidebarToggle = document.body.querySelector('#sidebarToggle');
+		if (sidebarToggle) {
+			if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+				document.body.classList.toggle('sb-sidenav-toggled');
+			}
+
+			sidebarToggle.addEventListener('click', event => {
+				event.preventDefault();
+				document.body.classList.toggle('sb-sidenav-toggled');
+				localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+			});
+		} else {
+			console.warn('사이드바 토글 버튼을 찾을 수 없습니다.');
+		}
+	}
+
 	renderMenu(menuHtml) {
 		const container = document.getElementById(this.containerId);
 		if (container) {
 			container.innerHTML = menuHtml;
 		}
+	}
+	// 렌더링 후 처리를 위한 메소드
+	postRender() {
+		// 하위 클래스에서 필요한 경우 오버라이드
 	}
 }
 
@@ -146,6 +169,32 @@ class SideMenuGenerator extends BaseMenuGenerator {
 
 // 상단 메뉴 생성기 클래스
 class TopMenuGenerator extends BaseMenuGenerator {
+	postRender() {
+		this.initSidebarToggle();  // TopMenu가 렌더링된 후 토글 이벤트 초기화
+	}
+
+	initSidebarToggle() {
+		const sidebarToggle = document.querySelector('#sidebarToggle');
+		if (sidebarToggle) {
+			// 이전 이벤트 리스너 제거
+			sidebarToggle.removeEventListener('click', this.handleSidebarToggle);
+
+			// 저장된 상태 복원
+			if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+				document.body.classList.add('sb-sidenav-toggled');
+			}
+
+			// 새 이벤트 리스너 추가
+			sidebarToggle.addEventListener('click', this.handleSidebarToggle);
+		}
+	}
+
+	handleSidebarToggle = (event) => {
+		event.preventDefault();
+		document.body.classList.toggle('sb-sidenav-toggled');
+		localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+	}
+
 	generateMenu(menuList) {
 		// 메인 메뉴 아이템들 생성
 		let menuItems = '';
