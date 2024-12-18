@@ -170,7 +170,7 @@ class SideMenuGenerator extends BaseMenuGenerator {
 // 상단 메뉴 생성기 클래스
 class TopMenuGenerator extends BaseMenuGenerator {
 	postRender() {
-		this.initSidebarToggle();  // TopMenu가 렌더링된 후 토글 이벤트 초기화
+		this.initSidebarToggle();
 	}
 
 	initSidebarToggle() {
@@ -179,10 +179,10 @@ class TopMenuGenerator extends BaseMenuGenerator {
 			// 이전 이벤트 리스너 제거
 			sidebarToggle.removeEventListener('click', this.handleSidebarToggle);
 
-			// 저장된 상태 복원
-			if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-				document.body.classList.add('sb-sidenav-toggled');
-			}
+			// localStorage 상태 체크를 제거하고,
+			// 항상 보이는 상태로 시작
+			document.body.classList.remove('sb-sidenav-toggled');
+			localStorage.removeItem('sb|sidebar-toggle');
 
 			// 새 이벤트 리스너 추가
 			sidebarToggle.addEventListener('click', this.handleSidebarToggle);
