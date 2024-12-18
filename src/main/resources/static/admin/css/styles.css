@@ -7743,6 +7743,7 @@ textarea.form-control-lg {
   padding: 3rem !important;
 }
 
+
 .pt-0 {
   padding-top: 0 !important;
 }
@@ -10954,8 +10955,7 @@ body {
   flex-direction: column;
 }
 .sb-sidenav .sb-sidenav-footer {
-  padding: 0.75rem;
-  flex-shrink: 0;
+  padding: 1rem;
 }
 
 .sb-sidenav-dark {
