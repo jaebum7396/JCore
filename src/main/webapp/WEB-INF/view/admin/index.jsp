@@ -15,28 +15,32 @@
             topMenu.init();
         </script>
     </head>
-    <body class="sb-nav-fixed">
-        <div id="topNavbar"></div>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
+    <body class="">
+        <div id="contents" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <div id="topArea">
+                <div id="topNavbar"></div>
             </div>
-            <div id="layoutSidenav_content">
-                <main>
-                </main>
-            </div>
-        </div>
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
+            <div id="mainArea" style="flex: 1;">
+                <div id="layoutSidenav">
+                    <div id="layoutSidenav_nav">
                     </div>
                 </div>
             </div>
-        </footer>
+            <div id="footerArea">
+                <footer class="py-2 bg-light">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     </body>
 </html>

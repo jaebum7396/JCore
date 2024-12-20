@@ -8114,7 +8114,7 @@ textarea.form-control-lg {
 
 .bg-light {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+  background-color: gainsboro !important;
 }
 
 .bg-dark {
@@ -10801,6 +10801,7 @@ body {
 }
 
 #layoutSidenav {
+  position: absolute;
   display: flex;
 }
 #layoutSidenav #layoutSidenav_nav {
@@ -10918,6 +10919,7 @@ body {
   flex-direction: column;
   height: 100%;
   flex-wrap: nowrap;
+  height: 86.2vh;
 }
 .sb-sidenav .sb-sidenav-menu {
   flex-grow: 1;
