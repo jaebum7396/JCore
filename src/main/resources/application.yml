@@ -12,8 +12,8 @@ spring:
   application:
     name: j-core
   profiles:
-    active: local
-    #active: deploy
+    #active: local
+    active: deploy
   redis:
     host: ${REDIS_URI}
     port: ${REDIS_PORT}
