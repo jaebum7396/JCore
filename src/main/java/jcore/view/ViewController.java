@@ -49,4 +49,8 @@ public class ViewController {
     public String adminIndex() {
         return "admin/index";
     }
+    @GetMapping("admin/trading")
+    public String trading() {
+        return "admin/trading";
+    }
 }

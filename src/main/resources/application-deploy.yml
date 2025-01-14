@@ -1,3 +1,7 @@
 cloud:
   gateway:
     uri: ${GATEWAY_URI}
+
+api:
+  trade:
+    url: ${TRADE_URL_DEPLOY}

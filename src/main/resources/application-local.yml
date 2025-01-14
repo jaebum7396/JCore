@@ -6,3 +6,7 @@ spring:
     service-registry:
       auto-registration:
         enabled: 'false'
+
+api:
+  trade:
+    url: ${TRADE_URL_DEPLOY}
