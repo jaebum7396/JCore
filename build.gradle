@@ -6,6 +6,11 @@ plugins {
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
+bootWar {
+	archiveBaseName = 'j-core.war'
+	archiveFileName = 'j-core.war'
+}
+
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
