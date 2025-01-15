@@ -94,7 +94,7 @@
                             display: flex;
                             flex-direction: row;
                             gap: 20px;
-                            padding: 15px;
+                            padding: 5px;
                             background-color: #f8f9fa;
                             border-radius: 8px;
                             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -112,7 +112,7 @@
                         }
 
                         .grid_info_value {
-                            padding: 6px 10px;
+                            padding: 2px 4px;
                             border: 1px solid #dee2e6;
                             border-radius: 4px;
                             background-color: #fff;
