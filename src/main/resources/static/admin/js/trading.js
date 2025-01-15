@@ -72,33 +72,90 @@ class ReadonlyTextEditor {
 	}
 }
 
-const columns =[
-	{name: "insertDt", header: "진입시간", width: 180, editor: 'text', align: 'center', borderStyle: '1px solid #ddd'}
-	//, {name: "tradingCd", header: "트레이딩코드(PK)", width: 300, align: 'center', editor: {type: ReadonlyTextEditor,options: {}}, borderStyle: '1px solid #ddd'}
-	, { name: "positionStatus", header: "상태", width: 100, align: 'center'
-		, formatter: 'listItemText'
-		, editor: makeSelectObj([
-			{text: 'OPEN', value: 'OPEN'}
-			, {text: 'CLOSE', value: 'CLOSE'}
-		])
-		, borderStyle: '1px solid #ddd'
-	}
-	, { name: "positionSide", header: "방향", width: 100, align: 'center'
-		, formatter: 'listItemText'
-		, editor: makeSelectObj([
-			{text: 'LONG', value: 'LONG'}
-			, {text: 'SHORT', value: 'SHORT'}
-		])
-		, borderStyle: '1px solid #ddd'
-	}
-	, {name: "collateral", header: "담보금", width: 100, editor: 'text', align: 'right', borderStyle: '1px solid #ddd'}
-	, {name: "openPrice", header: "진입가격", width: 100, editor: 'text', align: 'right', borderStyle: '1px solid #ddd'}
-	, {name: "closePrice", header: "종료가격", width: 100, editor: 'text', align: 'right', borderStyle: '1px solid #ddd'}
-	, {name: "profit", header: "실현수익", width: 150, editor: 'text', align: 'right', borderStyle: '1px solid #ddd'}
-	, {name: "leverage", header: "레버리지", width: 100, editor: 'text', align: 'center', borderStyle: '1px solid #ddd'}
-	//, {name: "qty",header: "qty",width: 100, align: 'left', borderStyle: '1px solid #ddd'}
-]
+// CSS 추가
+const style = document.createElement('style');
+style.textContent = `
+    .tui-grid-cell-long {
+        background-color: #E3F2FD !important;
+    }
+    .tui-grid-cell-short {
+        background-color: #FFEBEE !important;
+    }
+    .tui-grid-cell-profit-plus {
+        background-color: #E3F2FD !important;
+    }
+    .tui-grid-cell-profit-minus {
+        background-color: #FFEBEE !important;
+    }
+`;
+document.head.appendChild(style);
 
+const columns = [
+	{
+		name: "insertDt",
+		header: "진입시간",
+		minWidth: 150,
+		editor: 'text',
+		align: 'center',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "positionStatus",
+		header: "상태",
+		minWidth: 80,
+		align: 'center',
+		editor: 'text',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "positionSide",
+		header: "방향",
+		minWidth: 80,
+		align: 'center',
+		editor: 'text',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "collateral",
+		header: "담보금",
+		minWidth: 100,
+		editor: 'text',
+		align: 'right',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "openPrice",
+		header: "진입가격",
+		minWidth: 100,
+		editor: 'text',
+		align: 'right',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "closePrice",
+		header: "종료가격",
+		minWidth: 100,
+		editor: 'text',
+		align: 'right',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "profit",
+		header: "실현수익",
+		minWidth: 120,
+		editor: 'text',
+		align: 'right',
+		borderStyle: '1px solid #ddd'
+	},
+	{
+		name: "leverage",
+		header: "레버리지",
+		minWidth: 80,
+		editor: 'text',
+		align: 'center',
+		borderStyle: '1px solid #ddd'
+	}
+];
 
 function makeSelectObj(items){
 	let selectObj = {

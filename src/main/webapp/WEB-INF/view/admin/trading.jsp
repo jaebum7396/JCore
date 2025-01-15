@@ -229,28 +229,40 @@
                                         }
                                     }
                                 });
+
                                 var grid = new tui.Grid({
-                                    el: document.getElementById('grid')
-                                    //, rowHeaders: ['checkbox']
-                                    , bodyHeight: 500
-                                    , data: dataSource
-                                    , pageOptions: {
-                                        perPage: 20
-                                    }
-                                    , columnOptions: {
-                                        resizable: true
-                                    }
-                                    , scrollX: true
-                                    , scrollY: true
-                                    , columns: columns
-                                    , onGridMounted(ev) {
-                                        console.log('onGridMounted', ev);
-                                    }
-                                    , onGridBeforeDestroy(ev) {
-                                        //console.log('onGridBeforeDestroy', ev);
-                                    }
-                                    ,border: true  // 이 옵션 추가
+                                  el: document.getElementById('grid'),
+                                  data: dataSource,
+                                  columns: columns,
+                                  bodyHeight: 500,
+                                  pageOptions: {
+                                    useClient: true,
+                                    perPage: 20
+                                  },
+                                  scrollX: true,
+                                  scrollY: true,
+                                  columnOptions: {
+                                    resizable: true
+                                  },
+                                  rowHeaders: ['rowNum']
                                 });
+
+
+                                // 페이지 컨텐츠 스타일링
+                                const pageContent = document.querySelector('.page_content');
+                                pageContent.style.cssText = 'height:100%; overflow:auto; display:flex; flex-direction:column; align-items:center; padding: 20px;';
+
+                                // 그리드 정보 영역 스타일링
+                                const gridInfo = document.querySelector('.grid_info');
+                                gridInfo.style.cssText = 'width: 100%; max-width: 1200px; margin-bottom: 20px;';
+
+                                // 검색 리스트 영역 스타일링
+                                const searchList = document.querySelector('.search_list');
+                                searchList.style.cssText = 'width: 100%; max-width: 1200px;';
+
+                                // 그리드 컨테이너 스타일링
+                                const gridContainer = document.getElementById('grid');
+                                gridContainer.style.cssText = 'width: 100%; border: 1px solid #e0e0e0; border-radius: 4px;';
 
                                 grid.on('response', function (ev) {
                                     console.log('ev', ev)
