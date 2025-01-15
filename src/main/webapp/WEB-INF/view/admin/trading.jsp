@@ -52,7 +52,7 @@
                     <div id="layoutSidenav_nav">
                     </div>
                 </div>
-                <div class="page_content" style='width:100%; height:100%; overflow:scroll;'>
+                <div class="page_content" style='width:100%; height:100%; overflow:auto;'>
                     <div style="display:none;">
                         <div class="search_title">
                             <i></i><span> 검색조건</span>
@@ -156,7 +156,7 @@
                                     , bodyHeight: 500
                                     , data: dataSource
                                     , pageOptions: {
-                                        perPage: 10
+                                        perPage: 20
                                     }
                                     , columnOptions: {
                                         resizable: true

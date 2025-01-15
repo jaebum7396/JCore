@@ -56,7 +56,7 @@ class BaseMenuGenerator {
 class SideMenuGenerator extends BaseMenuGenerator {
 	generateMenu(menuList) {
 		let menuHtml = `
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion" style="display:none;">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
         `;
