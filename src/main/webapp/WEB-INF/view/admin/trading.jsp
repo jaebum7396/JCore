@@ -17,6 +17,20 @@
             topMenu.init();
         </script>
         <style>
+            .tui-grid {
+                border-right: 1px solid #ddd !important;
+            }
+            /* 마지막 컬럼 셀에 오른쪽 테두리 추가 */
+            .tui-grid-cell-header:last-child,
+            .tui-grid-cell:last-child {
+                border-right: 1px solid #ddd !important;
+            }
+
+            /* 또는 */
+            .tui-grid-border-line {
+                border-right: 1px solid #ddd !important;
+            }
+
             /* 헤더 테두리 */
             .tui-grid-header-cell {
                 border-right: 1px solid #ddd !important;
@@ -52,7 +66,7 @@
                     <div id="layoutSidenav_nav">
                     </div>
                 </div>
-                <div class="page_content" style='width:100%; height:100%; overflow:auto;'>
+                <div class="page_content" style='height:100%; overflow:auto; display:flex;flex-direction: column;'>
                     <div style="display:none;">
                         <div class="search_title">
                             <i></i><span> 검색조건</span>
@@ -75,8 +89,73 @@
                         </div>
                     </div>
 
+                    <style>
+                        .grid_info {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 20px;
+                            padding: 15px;
+                            background-color: #f8f9fa;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        }
+
+                        .grid_info_row {
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .grid_info_title {
+                            font-weight: 600;
+                            margin-right: 8px;
+                            color: #495057;
+                        }
+
+                        .grid_info_value {
+                            padding: 6px 10px;
+                            border: 1px solid #dee2e6;
+                            border-radius: 4px;
+                            background-color: #fff;
+                            text-align: right;
+                            max-width: 100px;
+                        }
+
+                        .win-lose-input {
+                            max-width: 40px;
+                        }
+
+                        .win-lose-input {
+                            max-width: 70px;
+                        }
+
+                        /* readonly 상태의 input 스타일 */
+                        .grid_info_value[readonly] {
+                            background-color: #fff;
+                            cursor: default;
+                        }
+                    </style>
+
+                    <div class="grid_info">
+                        <div class="grid_info_row">
+                            <div class="grid_info_title">총 실현수익 : </div>
+                            <input type="text" class="grid_info_value total_profit" readonly>
+                        </div>
+                        <div class="grid_info_row">
+                            <div class="grid_info_title">승률 : </div>
+                            <input type="text" class="grid_info_value win_rate win-rate-input" readonly>
+                        </div>
+                        <div class="grid_info_row">
+                            <div class="grid_info_title">승 : </div>
+                            <input type="text" class="grid_info_value win_count win-lose-input" readonly>
+                        </div>
+                        <div class="grid_info_row">
+                            <div class="grid_info_title">패 : </div>
+                            <input type="text" class="grid_info_value lose_count win-lose-input" readonly>
+                        </div>
+                    </div>
+
                     <!-- 검색 결과 리스트 -->
-                    <div class="search_list">
+                    <div class="search_list" style="">
                         <div>
                             <div id="grid" style=''></div>
                             <script>
@@ -152,7 +231,7 @@
                                 });
                                 var grid = new tui.Grid({
                                     el: document.getElementById('grid')
-                                    , rowHeaders: ['checkbox']
+                                    //, rowHeaders: ['checkbox']
                                     , bodyHeight: 500
                                     , data: dataSource
                                     , pageOptions: {
@@ -176,13 +255,24 @@
                                 grid.on('response', function (ev) {
                                     console.log('ev', ev)
                                     // 성공/실패와 관계 없이 응답을 받았을 경우
-                                    let resp = JSON.parse(ev.xhr.response)
-                                    console.log('response', resp)
-                                    if(resp.statusCode =='401'){
+                                    let response = JSON.parse(ev.xhr.response)
+                                    console.log('response', response)
+                                    let data = response.data;
+                                    let total_profit = parseFloat(data.totalProfit).toFixed(2);
+                                    let win_rate = parseFloat(data.winRate).toFixed(2);
+                                    let win_count = data.winCount;
+                                    let lose_count = data.loseCount;
+
+                                    $('.total_profit').val(total_profit);
+                                    $('.win_rate').val(win_rate);
+                                    $('.win_count').val(win_count);
+                                    $('.lose_count').val(lose_count);
+
+                                    if(response.statusCode =='401'){
                                         localStorage.setItem('token', '');
                                         alert('로그인이 만료되었습니다');
                                     }
-                                    if(JSON.stringify(resp) != '{}'){
+                                    if(JSON.stringify(response) != '{}'){
 
                                     }else{
                                         clickSearch();

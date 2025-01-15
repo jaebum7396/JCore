@@ -73,7 +73,8 @@ class ReadonlyTextEditor {
 }
 
 const columns =[
-	{ name: "tradingCd", header: "트레이딩코드(PK)", width: 300, align: 'center', editor: {type: ReadonlyTextEditor,options: {}}, borderStyle: '1px solid #ddd'}
+	{name: "insertDt", header: "진입시간", width: 180, editor: 'text', align: 'center', borderStyle: '1px solid #ddd'}
+	//, {name: "tradingCd", header: "트레이딩코드(PK)", width: 300, align: 'center', editor: {type: ReadonlyTextEditor,options: {}}, borderStyle: '1px solid #ddd'}
 	, {name: "collateral", header: "담보금", width: 100, editor: 'text', align: 'center', borderStyle: '1px solid #ddd'}
 	, {name: "leverage", header: "레버리지", width: 100, editor: 'text', align: 'center', borderStyle: '1px solid #ddd'}
 	, { name: "positionStatus", header: "상태", width: 100, align: 'center'
@@ -94,8 +95,8 @@ const columns =[
 	}
 	, {name: "openPrice", header: "openPrice", width: 100, editor: 'text', align: 'left', borderStyle: '1px solid #ddd'}
 	, {name: "closePrice", header: "closePrice", width: 100, editor: 'text', align: 'left', borderStyle: '1px solid #ddd'}
-	, {name: "profit", header: "profit", width: 200, editor: 'text', align: 'left', borderStyle: '1px solid #ddd'}
-	, {name: "qty",header: "qty",width: 100, align: 'left', borderStyle: '1px solid #ddd'}
+	, {name: "profit", header: "profit", width: 150, editor: 'text', align: 'left', borderStyle: '1px solid #ddd'}
+	//, {name: "qty",header: "qty",width: 100, align: 'left', borderStyle: '1px solid #ddd'}
 ]
 
 
