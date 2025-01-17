@@ -234,19 +234,31 @@
                                   el: document.getElementById('grid'),
                                   data: dataSource,
                                   columns: columns,
-                                  bodyHeight: 500,
+                                  bodyHeight: 620,
                                   pageOptions: {
-                                    useClient: true,
-                                    perPage: 20
+                                    useClient: false,
+                                    perPage: 15
                                   },
                                   scrollX: true,
                                   scrollY: true,
                                   columnOptions: {
                                     resizable: true
                                   },
-                                  rowHeaders: ['rowNum']
+                                  rowHeaders: [{
+                                    type: 'rowNum',
+                                    header: 'No.',
+                                    align: 'center',
+                                    width: 60,
+                                    formatter: function(value) {
+                                      // 현재 페이지번호를 가져옴
+                                      const currentPage = grid.getPagination().getCurrentPage();
+                                      // 페이지당 행 개수
+                                      const perPage = grid.getPagination().getItemsPerPage();
+                                      // 실제 번호 계산 ((현재페이지-1) * 페이지당개수 + 행번호)
+                                      return ((currentPage - 1) * perPage) + value;
+                                    }
+                                  }]
                                 });
-
 
                                 // 페이지 컨텐츠 스타일링
                                 const pageContent = document.querySelector('.page_content');

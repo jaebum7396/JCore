@@ -74,20 +74,6 @@ class ReadonlyTextEditor {
 
 // CSS 추가
 const style = document.createElement('style');
-style.textContent = `
-    .tui-grid-cell-long {
-        background-color: #E3F2FD !important;
-    }
-    .tui-grid-cell-short {
-        background-color: #FFEBEE !important;
-    }
-    .tui-grid-cell-profit-plus {
-        background-color: #E3F2FD !important;
-    }
-    .tui-grid-cell-profit-minus {
-        background-color: #FFEBEE !important;
-    }
-`;
 document.head.appendChild(style);
 
 const columns = [
