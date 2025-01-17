@@ -208,3 +208,27 @@ function makeSelectObj(items) {
   return selectObj;
 }
 
+function getTradingSummary(){
+  axios.get(TRADE_URL+'/trading/summary')
+      .then(response => {
+        if (response.status === 200) {
+          console.log('response:', response);
+          let data = response.data;
+          let total_count = data.totalCount;
+          let total_profit = data.totalProfit;
+          let win_rate = data.winRate;
+          let win_count = data.winCount;
+          let lose_count = data.loseCount;
+
+          $('.win_rate').val(win_rate);
+          $('.total_count').val(total_count);
+          $('.total_profit').val(total_profit);
+          $('.win_count').val(win_count);
+          $('.lose_count').val(lose_count);
+        }
+      })
+      .catch(error => {
+        console.error('메뉴 로딩 실패:', error);
+      });
+}
+

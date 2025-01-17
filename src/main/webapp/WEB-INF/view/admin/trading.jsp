@@ -145,6 +145,10 @@
                             <input type="text" class="grid_info_value win_rate win-rate-input" readonly>
                         </div>
                         <div class="grid_info_row">
+                            <div class="grid_info_title">매매횟수 : </div>
+                            <input type="text" class="grid_info_value total_count win-lose-input" readonly>
+                        </div>
+                        <div class="grid_info_row">
                             <div class="grid_info_title">승 : </div>
                             <input type="text" class="grid_info_value win_count win-lose-input" readonly>
                         </div>
@@ -281,7 +285,7 @@
                                     // 성공/실패와 관계 없이 응답을 받았을 경우
                                     let response = JSON.parse(ev.xhr.response)
                                     console.log('response', response)
-                                    let data = response.data;
+                                    /*let data = response.data;
                                     let total_profit = parseFloat(data.totalProfit).toFixed(2);
                                     let win_rate = parseFloat(data.winRate).toFixed(2);
                                     let win_count = data.winCount;
@@ -290,7 +294,9 @@
                                     $('.total_profit').val(total_profit);
                                     $('.win_rate').val(win_rate);
                                     $('.win_count').val(win_count);
-                                    $('.lose_count').val(lose_count);
+                                    $('.lose_count').val(lose_count);*/
+
+                                    getTradingSummary()
 
                                     if(response.statusCode =='401'){
                                         localStorage.setItem('token', '');
