@@ -137,8 +137,12 @@
 
                     <div class="grid_info">
                         <div class="grid_info_row">
-                            <div class="grid_info_title">총 실현수익 : </div>
+                            <div class="grid_info_title">실현수익 : </div>
                             <input type="text" class="grid_info_value total_profit" readonly>
+                        </div>
+                        <div class="grid_info_row">
+                            <div class="grid_info_title">실현수익률 : </div>
+                            <input type="text" class="grid_info_value total_profit_rate" readonly>
                         </div>
                         <div class="grid_info_row">
                             <div class="grid_info_title">승률 : </div>
