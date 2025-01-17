@@ -142,11 +142,11 @@
                         </div>
                         <div class="grid_info_row">
                             <div class="grid_info_title">실현수익률 : </div>
-                            <input type="text" class="grid_info_value total_profit_rate" readonly>
+                            <input type="text" class="grid_info_value total_profit_rate win-lose-input" readonly>
                         </div>
                         <div class="grid_info_row">
                             <div class="grid_info_title">승률 : </div>
-                            <input type="text" class="grid_info_value win_rate win-rate-input" readonly>
+                            <input type="text" class="grid_info_value win_rate win-lose-input" readonly>
                         </div>
                         <div class="grid_info_row">
                             <div class="grid_info_title">매매횟수 : </div>
@@ -242,10 +242,10 @@
                                   el: document.getElementById('grid'),
                                   data: dataSource,
                                   columns: columns,
-                                  bodyHeight: 620,
+                                  bodyHeight: 420,
                                   pageOptions: {
                                     useClient: false,
-                                    perPage: 15
+                                    perPage: 10
                                   },
                                   scrollX: true,
                                   scrollY: true,
