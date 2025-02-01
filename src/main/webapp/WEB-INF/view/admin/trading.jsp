@@ -145,6 +145,10 @@
                             <input type="text" class="grid_info_value total_profit_rate win-lose-input" readonly>
                         </div>
                         <div class="grid_info_row">
+                            <div class="grid_info_title">수수료 : </div>
+                            <input type="text" class="grid_info_value total_fee" readonly>
+                        </div>
+                        <div class="grid_info_row">
                             <div class="grid_info_title">승률 : </div>
                             <input type="text" class="grid_info_value win_rate win-lose-input" readonly>
                         </div>

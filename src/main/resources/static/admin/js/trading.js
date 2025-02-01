@@ -216,6 +216,7 @@ function getTradingSummary(){
           let data = response.data;
           let total_count = data.totalCount;
           let total_profit = data.totalProfit;
+          let total_fee = data.totalFee;
           let total_profit_rate = data.totalProfitRate;
           let win_rate = data.winRate;
           let win_count = data.winCount;
@@ -224,6 +225,7 @@ function getTradingSummary(){
           $('.win_rate').val(win_rate);
           $('.total_count').val(total_count);
           $('.total_profit').val(total_profit);
+          $('.total_fee').val(total_fee);
           $('.total_profit_rate').val(total_profit_rate);
           $('.win_count').val(win_count);
           $('.lose_count').val(lose_count);
